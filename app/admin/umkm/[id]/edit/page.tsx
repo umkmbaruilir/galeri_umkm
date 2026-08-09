@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { prisma } from "../../../../../lib/prisma";
 import EditUmkmForm from "../../../../../components/forms/EditUmkmForm";
 
