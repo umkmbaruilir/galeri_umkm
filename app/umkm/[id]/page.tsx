@@ -80,20 +80,22 @@ export default async function DetailPage({
             Belum ada foto galeri.
           </p>
         ) : (
-          <div className="grid md:grid-cols-3 gap-4">
-            {umkm.galleries.map(
-              (gallery) => (
-                <img
-                  key={gallery.id}
-                  src={
-                    gallery.imageUrl
-                  }
-                  alt={umkm.name}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
-              )
-            )}
-          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+  {umkm.galleries.map(
+    (gallery: any) => (
+      <div
+        key={gallery.id}
+        className="overflow-hidden rounded-xl border"
+      >
+        <img
+          src={gallery.imageUrl}
+          alt={umkm.name}
+          className="w-full h-72 object-cover"
+        />
+      </div>
+    )
+  )}
+</div>
         )}
       </section>
     </main>

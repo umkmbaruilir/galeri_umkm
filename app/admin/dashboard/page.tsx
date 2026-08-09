@@ -16,8 +16,8 @@ export default async function Dashboard() {
     });
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">
+    <div className="space-y-8">
+      <h1 className="text-3xl font-bold">
         Dashboard
       </h1>
 
@@ -45,7 +45,7 @@ export default async function Dashboard() {
         </h2>
 
         <ul className="space-y-2">
-          {latest.map((item) => (
+          {latest.map((item: any) => (
             <li key={item.id}>
               {item.name}
             </li>

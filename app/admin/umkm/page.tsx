@@ -106,98 +106,88 @@ export default async function UmkmPage() {
           </thead>
 
           <tbody>
-            {umkms.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={8}
-                  className="p-8 text-center"
-                >
-                  Belum ada data UMKM
-                </td>
-              </tr>
-            ) : (
-              umkms.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-t"
-                >
-                  {/* COVER */}
-                  <td className="p-4">
-                    <img
-                      src={
-                        item.coverImage ??
-                        "https://placehold.co/100x100?text=UMKM"
-                      }
-                      alt={item.name}
-                      className="w-16 h-16 rounded object-cover"
-                    />
-                  </td>
+  {umkms.length === 0 ? (
+    <tr>
+      <td
+        colSpan={8}
+        className="p-8 text-center"
+      >
+        Belum ada data UMKM
+      </td>
+    </tr>
+  ) : (
+    umkms.map((item: any) => (
+      <tr
+        key={item.id}
+        className="border-t"
+      >
+        <td className="p-4">
+          <img
+            src={
+              item.coverImage ??
+              "https://placehold.co/100x100?text=UMKM"
+            }
+            alt={item.name}
+            className="w-16 h-16 rounded object-cover"
+          />
+        </td>
 
-                  {/* NAMA */}
-                  <td className="p-4 font-medium">
-                    {item.name}
-                  </td>
+        <td className="p-4 font-medium">
+          {item.name}
+        </td>
 
-                  {/* KATEGORI */}
-                  <td className="p-4">
-                    <span className="bg-slate-100 px-2 py-1 rounded text-sm">
-                      Belum Ada
-                    </span>
-                  </td>
+        <td className="p-4">
+          <span className="bg-slate-100 px-2 py-1 rounded text-sm">
+            {item.category ??
+              "Belum Ada"}
+          </span>
+        </td>
 
-                  {/* PEMILIK */}
-                  <td className="p-4">
-                    {item.owner}
-                  </td>
+        <td className="p-4">
+          {item.owner}
+        </td>
 
-                  {/* WA */}
-                  <td className="p-4">
-                    {item.whatsapp}
-                  </td>
+        <td className="p-4">
+          {item.whatsapp}
+        </td>
 
-                  {/* FOTO */}
-                  <td className="p-4 text-center">
-                    {
-                      item.galleries
-                        .length
-                    }
-                  </td>
+        <td className="p-4 text-center">
+          {item.galleries.length}
+        </td>
 
-                  {/* TANGGAL */}
-                  <td className="p-4">
-                    {new Date(
-                      item.createdAt
-                    ).toLocaleDateString(
-                      "id-ID"
-                    )}
-                  </td>
+        <td className="p-4">
+          {new Date(
+            item.createdAt
+          ).toLocaleDateString(
+            "id-ID"
+          )}
+        </td>
 
-                  {/* AKSI */}
-                  <td className="p-4">
-                    <div className="flex gap-3 justify-center">
-                      <Link
-                        href={`/admin/umkm/${item.id}`}
-                        className="text-green-600 hover:underline"
-                      >
-                        Foto
-                      </Link>
+        <td className="p-4">
+          <div className="flex gap-3 justify-center">
+            <Link
+              href={`/admin/umkm/${item.id}`}
+              className="text-green-600 hover:underline"
+            >
+              Foto
+            </Link>
 
-                      <Link
-                        href={`/admin/umkm/${item.id}/edit`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        Edit
-                      </Link>
+            <Link
+              href={`/admin/umkm/${item.id}/edit`}
+              className="text-blue-600 hover:underline"
+            >
+              Edit
+            </Link>
 
-                      <DeleteButton
-                        id={item.id}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
+            <DeleteButton
+              id={item.id}
+            />
+          </div>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
         </table>
       </div>
     </div>

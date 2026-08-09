@@ -86,29 +86,27 @@ export default async function DetailAdminPage({
           <p>Belum ada foto galeri.</p>
         ) : (
           <div className="grid md:grid-cols-3 gap-4">
-            {umkm.galleries.map(
-              (gallery) => (
-                <div
-                  key={gallery.id}
-                  className="border rounded-lg overflow-hidden"
-                >
-                  <img
-                    src={
-                      gallery.imageUrl
-                    }
-                    alt=""
-                    className="w-full h-56 object-cover"
-                  />
+  {umkm.galleries.map(
+    (gallery: any) => (
+      <div
+        key={gallery.id}
+        className="border rounded-lg overflow-hidden"
+      >
+        <img
+          src={gallery.imageUrl}
+          alt=""
+          className="w-full h-56 object-cover"
+        />
 
-                  <div className="p-3">
-                    <DeleteGalleryButton
-                      id={gallery.id}
-                    />
-                  </div>
-                </div>
-              )
-            )}
-          </div>
+        <div className="p-3">
+          <DeleteGalleryButton
+            id={gallery.id}
+          />
+        </div>
+      </div>
+    )
+  )}
+</div>
         )}
       </section>
     </main>
