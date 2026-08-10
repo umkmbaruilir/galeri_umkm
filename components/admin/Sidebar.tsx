@@ -1,6 +1,18 @@
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
+async function logout() {
+  await fetch(
+    "/api/auth/logout",
+    {
+      method: "POST",
+    }
+  );
+
+  window.location.href =
+    "/admin/login";
+}
+
 export default function Sidebar() {
   return (
     <aside className="w-64 bg-slate-900 text-white p-4">
