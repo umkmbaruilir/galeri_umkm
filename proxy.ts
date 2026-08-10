@@ -1,30 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "./lib/auth";
 
-export function middleware(
-  request: NextRequest
-) {
+export function proxy(request: NextRequest) {
   const token =
     request.cookies.get("token");
 
   const path =
     request.nextUrl.pathname;
 
-  const isLoginPage =
-    path === "/admin/login";
-
   const isProtected =
     path.startsWith("/admin/dashboard") ||
     path.startsWith("/admin/umkm");
 
-  const isAuthenticated =
-    token &&
-    verifyToken(token.value);
+  const isLoginPage =
+    path === "/admin/login";
 
-  if (
-    isProtected &&
-    !isAuthenticated
-  ) {
+  if (isProtected && !token) {
     return NextResponse.redirect(
       new URL(
         "/admin/login",
@@ -33,10 +23,7 @@ export function middleware(
     );
   }
 
-  if (
-    isLoginPage &&
-    isAuthenticated
-  ) {
+  if (isLoginPage && token) {
     return NextResponse.redirect(
       new URL(
         "/admin/dashboard",
