@@ -22,22 +22,22 @@ export default function Sidebar() {
 
       <nav className="space-y-3">
         <Link
-         href="/admin/news"
-        className="block px-4 py-2 rounded hover:bg-slate-100"
+         href="/admin/dashboard"
+        className="block px-4 py-2 rounded hover:bg-slate-400"
         >
           Dashboard
         </Link>
 
         <Link
-         href="/admin/news"
-        className="block px-4 py-2 rounded hover:bg-slate-100"
+         href="/admin/umkm"
+        className="block px-4 py-2 rounded hover:bg-blue-400"
         >
           UMKM
         </Link>
 
         <Link
          href="/admin/news"
-        className="block px-4 py-2 rounded hover:bg-slate-100"
+        className="block px-4 py-2 rounded hover:bg-blue-400"
         >
         Berita KKN
         </Link>
