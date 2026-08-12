@@ -1,5 +1,9 @@
 import Link from "next/link";
+
 import { prisma } from "../lib/prisma";
+import NewsCarousel from "../components/public/NewsCarousel";
+
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const totalUmkm =
@@ -7,6 +11,14 @@ export default async function HomePage() {
 
   const totalGallery =
     await prisma.gallery.count();
+
+  const news =
+    await prisma.news.findMany({
+      take: 5,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
   return (
     <main>
@@ -59,6 +71,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* BERITA KKN */}
+      <NewsCarousel news={news} />
 
       {/* TENTANG */}
       <section className="max-w-6xl mx-auto px-4 pb-20">

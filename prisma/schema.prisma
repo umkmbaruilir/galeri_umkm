@@ -39,3 +39,12 @@ model Gallery {
 
   createdAt DateTime @default(now())
 }
+
+model News {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
