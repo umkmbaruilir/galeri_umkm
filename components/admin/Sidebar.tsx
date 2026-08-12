@@ -35,6 +35,13 @@ export default function Sidebar() {
           UMKM
         </Link>
 
+        <Link
+         href="/admin/news"
+        className="block px-4 py-2 rounded hover:bg-slate-100"
+        >
+        Berita KKN
+        </Link>
+
         <div className="mt-8">
           <LogoutButton />
         </div>
