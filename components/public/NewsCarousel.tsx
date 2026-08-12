@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
 interface News {
   id: string;
@@ -16,14 +17,38 @@ export default function NewsCarousel({
 }: {
   news: News[];
 }) {
-  const [emblaRef] =
-    useEmblaCarousel({
+const [emblaRef, emblaApi] =
+  useEmblaCarousel(
+    {
       loop: true,
-    });
+    },
+    [
+      Autoplay({
+        delay: 4000,
+        stopOnInteraction: false,
+      }),
+    ]
+  );
 
   if (news.length === 0) {
     return null;
   }
+
+  <div className="flex justify-center gap-3 mt-6">
+  <button
+    onClick={() => emblaApi?.scrollPrev()}
+    className="px-4 py-2 border rounded"
+  >
+    ←
+  </button>
+
+  <button
+    onClick={() => emblaApi?.scrollNext()}
+    className="px-4 py-2 border rounded"
+  >
+    →
+  </button>
+</div>
 
   return (
     <section className="py-20">
