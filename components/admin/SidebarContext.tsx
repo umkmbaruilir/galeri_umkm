@@ -4,15 +4,25 @@ import {
   createContext,
   useContext,
   useState,
+  ReactNode,
 } from "react";
 
+interface SidebarContextType {
+  open: boolean;
+  setOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+}
+
 const SidebarContext =
-  createContext<any>(null);
+  createContext<SidebarContextType | null>(
+    null
+  );
 
 export function SidebarProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const [open, setOpen] =
     useState(false);
@@ -30,7 +40,14 @@ export function SidebarProvider({
 }
 
 export function useSidebar() {
-  return useContext(
-    SidebarContext
-  );
+  const context =
+    useContext(SidebarContext);
+
+  if (!context) {
+    throw new Error(
+      "useSidebar harus digunakan di dalam SidebarProvider"
+    );
+  }
+
+  return context;
 }

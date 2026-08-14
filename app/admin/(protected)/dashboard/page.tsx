@@ -57,6 +57,40 @@ export default async function Dashboard() {
     latestUmkm = result[3];
     totalViews = result[4]._sum.views ?? 0;
     topUmkm = result[5];
+
+  const monthlyUmkm = await prisma.umkm.findMany({
+    select: {
+      createdAt: true,
+    },
+  });
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mei",
+    "Jun",
+    "Jul",
+    "Agu",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Des",
+  ];
+
+  const chartData = months.map((month, index) => {
+    const count = monthlyUmkm.filter(
+      (item) =>
+        new Date(item.createdAt).getMonth() === index
+    ).length;
+
+    return {
+      name: month,
+      umkm: count,
+    };
+  });
+
   } catch (error) {
     console.error(
       "Dashboard Query Error:",
@@ -64,6 +98,13 @@ export default async function Dashboard() {
     );
   }
 
+  const chartData = [
+  {
+    name: "UMKM",
+    umkm: totalUmkm,
+  },
+];
+  
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-800">
@@ -114,7 +155,7 @@ export default async function Dashboard() {
           </h3>
 
           <div className="h-[300px]">
-            <DashboardChart />
+            <DashboardChart data={chartData} />
           </div>
         </div>
 
