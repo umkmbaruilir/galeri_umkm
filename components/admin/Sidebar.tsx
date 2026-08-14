@@ -2,27 +2,47 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, Newspaper, Image as ImageIcon, Settings, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  Store,
+  Newspaper,
+} from "lucide-react";
 import LogoutButton from "./LogoutButton";
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   const menuItems = [
-    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-    { name: "Data UMKM", href: "/admin/umkm", icon: Store },
-    { name: "Berita", href: "/admin/news", icon: Newspaper },
+    {
+      name: "Dashboard",
+      href: "/admin/dashboard",
+      icon: LayoutDashboard,
+    },
+    {
+      name: "Data UMKM",
+      href: "/admin/umkm",
+      icon: Store,
+    },
+    {
+      name: "Berita",
+      href: "/admin/news",
+      icon: Newspaper,
+    },
   ];
 
   return (
-    <aside className="w-64 h-screen bg-white dark:bg-coreui-darkCard border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col shadow-sm transition-all duration-300">
+    <aside className="fixed left-0 top-0 w-64 h-screen bg-white dark:bg-coreui-darkCard border-r border-gray-200 dark:border-gray-800 hidden md:flex flex-col shadow-sm transition-all duration-300 z-50">
       <div className="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-800">
-        <span className="text-xl font-bold text-coreui-primary dark:text-white">Admin Panel</span>
+        <span className="text-xl font-bold text-coreui-primary dark:text-white">
+          Admin Panel
+        </span>
       </div>
-      
-      <nav className="flex-1 px-4 py-6 RZFspace-y-1 overflow-y-auto">
+
+      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive =
+            pathname === item.href;
+
           return (
             <Link
               key={item.name}
