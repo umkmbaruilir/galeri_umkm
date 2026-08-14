@@ -18,39 +18,51 @@ import {
 } from "lucide-react";
 
 export default async function Dashboard() {
-  const [
-    totalUmkm,
-    totalGallery,
-    totalBerita,
-    latestUmkm,
-    totalViews,
-    topUmkm,
-  ] = await Promise.all([
-    prisma.umkm.count(),
+  let totalUmkm = 0;
+  let totalGallery = 0;
+  let totalBerita = 0;
+  let latestUmkm: any[] = [];
+  let totalViews = 0;
+  let topUmkm: any = null;
 
-    prisma.gallery.count(),
+  try {
+    const result = await Promise.all([
+      prisma.umkm.count(),
+      prisma.gallery.count(),
+      prisma.news.count(),
 
-    prisma.news.count(),
+      prisma.umkm.findMany({
+        take: 5,
+        orderBy: {
+          createdAt: "desc",
+        },
+      }),
 
-    prisma.umkm.findMany({
-      take: 5,
-      orderBy: {
-        createdAt: "desc",
-      },
-    }),
+      prisma.umkm.aggregate({
+        _sum: {
+          views: true,
+        },
+      }),
 
-    prisma.umkm.aggregate({
-      _sum: {
-        views: true,
-      },
-    }),
+      prisma.umkm.findFirst({
+        orderBy: {
+          views: "desc",
+        },
+      }),
+    ]);
 
-    prisma.umkm.findFirst({
-      orderBy: {
-        views: "desc",
-      },
-    }),
-  ]);
+    totalUmkm = result[0];
+    totalGallery = result[1];
+    totalBerita = result[2];
+    latestUmkm = result[3];
+    totalViews = result[4]._sum.views ?? 0;
+    topUmkm = result[5];
+  } catch (error) {
+    console.error(
+      "Dashboard Query Error:",
+      error
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -86,7 +98,7 @@ export default async function Dashboard() {
 
         <StatsCard
           title="Total Pengunjung"
-          value={totalViews._sum.views ?? 0}
+          value={totalViews}
           subtitle="Akumulasi seluruh kunjungan UMKM"
           icon={Users}
           bgClass="bg-[#28c76f]"
@@ -132,11 +144,14 @@ export default async function Dashboard() {
                     <p className="text-xs text-slate-500">
                       {new Date(
                         item.createdAt
-                      ).toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
+                      ).toLocaleDateString(
+                        "id-ID",
+                        {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        }
+                      )}
                     </p>
                   </div>
                 </div>
@@ -165,11 +180,9 @@ export default async function Dashboard() {
                   <th className="pb-3">
                     Nama UMKM
                   </th>
-
                   <th className="pb-3">
                     Tanggal
                   </th>
-
                   <th className="pb-3 text-right">
                     Views
                   </th>
@@ -204,7 +217,6 @@ export default async function Dashboard() {
           </div>
         </div>
 
-        {/* TOP UMKM */}
         <div className="bg-[#5e5ce6] rounded-xl shadow-lg p-8 text-white relative overflow-hidden">
           <Trophy className="absolute -right-10 -bottom-10 w-48 h-48 opacity-10" />
 
