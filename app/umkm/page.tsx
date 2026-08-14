@@ -1,6 +1,8 @@
 import { prisma } from "../../lib/prisma";
 import UmkmList from "../../components/public/UmkmList";
 
+export const dynamic = "force-dynamic";
+
 export default async function PublicUmkmPage() {
   const umkms = await prisma.umkm.findMany({
     include: {

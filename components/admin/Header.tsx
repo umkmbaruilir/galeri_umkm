@@ -7,6 +7,8 @@ import {
   User,
 } from "lucide-react";
 
+import { usePathname } from "next/navigation";
+
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -18,6 +20,21 @@ export default function Header() {
 
   const { setOpen } =
     useSidebar();
+
+  const pathname = usePathname();
+
+const pageName =
+  pathname === "/admin/dashboard"
+    ? "Dashboard"
+    : pathname === "/admin/umkm"
+    ? "UMKM"
+    : pathname === "/admin/news"
+    ? "Berita"
+    : pathname.includes("/admin/umkm/")
+    ? "Detail UMKM"
+    : pathname.includes("/admin/news/")
+    ? "Detail Berita"
+    : "Dashboard";
 
   const [mounted, setMounted] =
     useState(false);
@@ -39,7 +56,7 @@ export default function Header() {
         <div className="hidden md:flex text-sm text-gray-500 dark:text-gray-400">
           Admin /
           <span className="text-gray-900 dark:text-white ml-1 font-medium">
-            Dashboard
+            {pageName}
           </span>
         </div>
       </div>
